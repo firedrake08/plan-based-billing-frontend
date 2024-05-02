@@ -1,0 +1,32 @@
+<h2>Transactions</h2>
+<div *ngIf="!allTransactions.length">
+    <h3>No transactions to display</h3>
+</div>
+<div *ngIf="allTransactions.length">
+    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+        <input type="text" placeholder="Please select start date and end date" class="form-control" bsDaterangepicker
+            (bsValueChange)="handleDateChange($event)">
+    </div>
+    <div *ngIf="!filteredTransactions.length">
+        <h3>No transactions in this date range.Please select a different date range</h3>
+    </div>
+    <div *ngIf="filteredTransactions.length">
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Date</th>
+                <th>Mobile</th>
+                <th>Plan</th>
+                <th>Availed Services</th>
+                <th>Bill Amount</th>
+            </tr>
+            <tr *ngFor="let transaction of filteredTransactions">
+                <td>{{transaction.date|date}}</td>
+                <td>{{transaction.customerMobile}}</td>
+                <td>{{transaction.plan}}</td>
+                <td>{{transaction.availedServices}}</td>
+                <td>{{transaction.finalBill}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

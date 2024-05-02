@@ -1,0 +1,37 @@
+<div *ngIf="!loading">
+    <h2>Customers</h2>
+    <div *ngIf="!currentBusiness.customers.length">
+        <h3>No customers to display</h3>
+    </div>
+    <div *ngIf="currentBusiness.customers.length">
+        <table class="table table-bordered">
+            <tr>
+                <th>Mobile</th>
+                <th>Plan</th>
+            </tr>
+            <tr *ngFor="let customer of currentBusiness.customers">
+                <td>{{customer.mobile}}</td>
+                <td>{{customer.plan}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <button class="btn btn-primary me-3" (click)="addCustomer()">Add new customer</button>
+    <div class="w-25 mt-3" *ngIf="showCustomerForm" [formGroup]="customerForm">
+        <label>Mobile</label>
+        <input type="text" class="form-control mb-2" placeholder="Enter Mobile" formControlName="mobile">
+        <label>Plan</label>
+        <select class="form-select" formControlName="plan">
+            <option [selected]="true" disabled>Select plan</option>
+            <option *ngFor="let plan of currentBusiness.plans" [value]="plan.title">{{plan.title}}</option>
+        </select>
+        <button type="button" class="btn btn-primary mt-3" [disabled]="!customerForm.valid"
+            (click)="saveCustomer()">Save</button>
+    </div>
+</div>
+<div *ngIf="loading"
+    class="loader-container bg-white d-flex flex-column justify-content-center align-items-center bg-opacity-50">
+    <div class="page-loader">
+    </div>
+    <span class="mt-2 text-primary-emphasis">Loading...</span>
+</div>

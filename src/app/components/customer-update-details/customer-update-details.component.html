@@ -1,0 +1,18 @@
+<div *ngIf="!loading">
+    <h2>Update details</h2>
+    <div class="w-25" [formGroup]="customerUpdateForm">
+        <input type="text" class="form-control mb-2" placeholder="Mobile" formControlName="mobile">
+        <input type="password" class="form-control mb-2" placeholder="Password" formControlName="password">
+        <input type="text" class="form-control mb-2" placeholder="Fullname" formControlName="fullname">
+        <input type="text" class="form-control mb-2" placeholder="Email" formControlName="email">
+        <input type="text" class="form-control mb-2" placeholder="Address" formControlName="address">
+    </div>
+    <button class="btn btn-primary" (click)="updateCustomerDetails()" [disabled]="!customerUpdateForm.valid">Update
+        details</button>
+</div>
+<div *ngIf="loading"
+    class="loader-container bg-white d-flex flex-column justify-content-center align-items-center bg-opacity-50">
+    <div class="page-loader">
+    </div>
+    <span class="mt-2 text-primary-emphasis">Loading...</span>
+</div>

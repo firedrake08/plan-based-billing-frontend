@@ -1,0 +1,157 @@
+<h1>Add your plans for {{currentBusiness.businessName}}</h1>
+<button class="btn btn-danger" (click)="logout()">Logout</button>
+<div class="w-50 mt-3" [formGroup]="plansForm">
+    <div formArrayName="plans">
+        <div *ngFor="let plan of plans.controls;let i= index;">
+            <div [formGroupName]="i">
+                <input type="text" class="form-control mb-2" placeholder="Title" formControlName="title">
+                <input type="text" class="form-control mb-2" placeholder="Discount" formControlName="discount">
+                <input type="text" class="form-control mb-2" placeholder="Price" formControlName="price">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+    <button class="btn btn-info me-3" (click)="addPlan()">Add new plan</button>
+    <button class="btn btn-primary" (click)="savePlans()">Save plan</button>
+</div>
+<button type="button" class="btn btn-info" (click)="openAddServiceModal(addServiceModal)">
+    Add Service
+</button>
+<div>
+    <button type="button" class="btn btn-warning" (click)="openAddCustomerModal(addCustomerModal)">
+        Add Customer
+    </button>
+    <button type="button" class="btn btn-info" (click)="openGenerateInvoiceModal(generateInvoiceModal)">
+        Generate Invoice
+    </button>
+</div>
+<div class="my-3">
+    <button class="btn btn-primary me-3" (click)="fetchAllCustomers()">All customers</button>
+    <button class="btn btn-success" (click)="fetchAllTransactions()">All transactions</button>
+</div>
+
+<div *ngIf="allCustomers.length">
+    <table class="table table-bordered">
+        <tr>
+            <th>Mobile</th>
+            <th>Plan</th>
+        </tr>
+        <tr *ngFor="let customer of allCustomers">
+            <td>{{customer.mobile}}</td>
+            <td>{{customer.plan}}</td>
+        </tr>
+    </table>
+</div>
+
+<div *ngIf="filteredTransactions.length">
+    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+        <input type="text"
+               placeholder="Please select start date and end date"
+               class="form-control"
+               bsDaterangepicker
+               (bsValueChange)="handleDateChange($event)">
+      </div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Date</th>
+            <th>Mobile</th>
+            <th>Plan</th>
+            <th>Availed Services</th>
+            <th>Bill Amount</th>
+        </tr>
+        <tr *ngFor="let transaction of filteredTransactions">
+            <td>{{transaction.date|date}}</td>
+            <td>{{transaction.customerMobile}}</td>
+            <td>{{transaction.plan}}</td>
+            <td>{{transaction.availedServices}}</td>
+            <td>{{transaction.finalBill}}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Generate Invoice Modal -->
+<ng-template #generateInvoiceModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Generate Invoice</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeGenerateInvoiceModal()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [formGroup]="fetchCustomerForm">
+            <input type="text" class="form-control mb-2" placeholder="Mobile" formControlName="mobile">
+        </div>
+        <p *ngIf="customerDetails">{{customerDetails.mobile}} - {{customerDetails.plan}}</p>
+        <div *ngIf="allServices.length">
+            <div [formGroup]="generateInvoiceForm">
+                <div *ngFor="let aS of allServices">
+                    <input type="checkbox" [checked]="false" (change)="handleCheckbox($event)"
+                        [value]="aS.title" class="form-check-input">
+                    <label>{{aS.title}} - {{aS.price}}</label>
+                </div>
+            </div>
+            <p>Total: {{totalPrice}}</p>
+            <p>Discount: {{currentCustomerPlan.discount}}%</p>
+            <p>Final price: {{finalPrice}}</p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeGenerateInvoiceModal()">Cancel</button>
+        <button *ngIf="!customerDetails" type="button" class="btn btn-success" (click)="getCustomerDetails()">Get
+            customer details</button>
+        <button *ngIf="customerDetails" type="button" class="btn btn-primary" (click)="generateInvoice()">Generate Invoice</button>
+    </div>
+</ng-template>
+
+
+
+<!-- Add customer Modal -->
+<ng-template #addCustomerModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Service</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeAddCustomerModal()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [formGroup]="customerForm">
+            <input type="text" class="form-control mb-2" placeholder="Mobile" formControlName="mobile">
+            <select class="form-select" formControlName="plan">
+                <option [selected]="true" disabled>Select plan</option>
+                <option *ngFor="let plan of currentBusiness.plans" [value]="plan.title">{{plan.title}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAddCustomerModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveCustomer()">Save</button>
+    </div>
+</ng-template>
+
+<!-- Add Service Modal -->
+<ng-template #addServiceModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Service</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeAddServiceModal()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="mt-3" [formGroup]="addServiceForm">
+            <div formArrayName="services">
+                <div *ngFor="let service of services.controls;let i= index;">
+                    <div [formGroupName]="i">
+                        <input type="text" class="form-control mb-2" placeholder="Title" formControlName="title">
+                        <input type="text" class="form-control mb-2" placeholder="Price" formControlName="price">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-info me-3" (click)="addService()">Add new service</button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAddServiceModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveServices()">Save</button>
+    </div>
+</ng-template>

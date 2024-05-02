@@ -1,0 +1,45 @@
+<div class="login" *ngIf="!loading">
+  <div class="row p-3">
+    <div class="biz-login col-12 col-sm-6 border-end border-primary border-3">
+      <div *ngIf="bizLoginRegisterToggle">
+        <h1 class="text-center">BUSINESS LOGIN</h1>
+        <div [formGroup]="loginForm">
+          <input type="text" class="form-control mb-2" placeholder="mobile" formControlName="primaryMobile">
+          <input type="text" class="form-control mb-2" placeholder="password" formControlName="password">
+        </div>
+        <button class="btn btn-primary ms-2" (click)="businessLogin()">Login</button>
+        <p class="text-primary cursor-underline" (click)="toggleLoginRegister()">Not registered yet?</p>
+      </div>
+      <div *ngIf="!bizLoginRegisterToggle">
+        <h1 class="text-center">BUSINESS REGISTER</h1>
+        <div [formGroup]="businessForm">
+          <input type="text" class="form-control mb-2" placeholder="Business Name" formControlName="businessName">
+          <input type="text" class="form-control mb-2" placeholder="Primary mobile" formControlName="primaryMobile">
+          <input type="text" class="form-control mb-2" placeholder="Email" formControlName="email">
+          <input type="password" class="form-control mb-2" placeholder="Password" formControlName="password">
+          <button class="btn btn-primary ms-2" (click)="registerBusiness()">Register</button>
+        </div>
+        <p class="text-primary cursor-underline" (click)="toggleLoginRegister()">Already registered?</p>
+      </div>
+    </div>
+    <div class="customer-login col-12 col-sm-6">
+      <h1 class="text-center">CUSTOMER LOGIN</h1>
+      <div [formGroup]="customerLoginForm">
+        <input type="text" class="form-control mb-2" placeholder="Mobile" formControlName="mobile">
+      </div>
+      <div *ngIf="isCustomerLoggedIn">
+        <p>Create password:</p>
+        <div [formGroup]="customerPwdForm">
+          <input type="password" class="form-control mb-2" placeholder="Password" formControlName="password">
+        </div>
+      </div>
+      <button *ngIf="!isCustomerLoggedIn" class="btn btn-primary" (click)="customerLogin()">Login</button>
+      <button *ngIf="isCustomerLoggedIn" class="btn btn-primary" (click)="createPassword()">Save password</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="loading" class="loader-container bg-white d-flex flex-column justify-content-center align-items-center bg-opacity-50">
+  <div class="page-loader">
+  </div>
+  <span class="mt-2 text-primary-emphasis">Loading...</span>
+</div>

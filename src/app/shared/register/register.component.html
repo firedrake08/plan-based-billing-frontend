@@ -1,0 +1,8 @@
+<div class="w-25" [formGroup]="businessForm">
+    <input type="text" class="form-control mb-2" placeholder="Business Name" formControlName="businessName">
+    <input type="text" class="form-control mb-2" placeholder="Primary mobile" formControlName="primaryMobile">
+    <input type="text" class="form-control mb-2" placeholder="Email" formControlName="email">
+    <input type="password" class="form-control mb-2" placeholder="Password" formControlName="password">
+    <button class="btn btn-primary ms-2" (click)="registerBusiness()">Register</button>
+</div>
+<p><a routerLink="/login">Already registered?</a></p>

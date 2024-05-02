@@ -1,0 +1,22 @@
+.header{
+    position: fixed;
+    top:0;
+    width:100%;
+    z-index:999;
+}
+
+.main{
+    margin-top:60px;
+}
+
+button{
+    padding:0;
+}
+
+a{
+    display:inline-block;
+    text-decoration: none;
+}
+a:hover{
+    color:white;
+}

@@ -1,0 +1,9 @@
+<div class="header bg-white d-flex justify-content-between px-3 align-items-center shadow">
+    <h1><a class="text-primary-emphasis" routerLink="customer-details">Customer Dashboard</a></h1>
+    <button class="btn btn-outline-primary me-3"><a class="px-2 py-1" routerLink="transactions">Transactions</a></button>
+    <button class="btn btn-outline-primary me-3"><a class="px-2 py-1" routerLink="update-details">Update details</a></button>
+    <button class="btn btn-danger px-2 py-1" (click)="logout()">Logout</button>
+</div>
+<div class="main mx-3">
+    <router-outlet></router-outlet>
+</div>

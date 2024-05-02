@@ -1,0 +1,30 @@
+<div *ngIf="!loading">
+    <h2>Generate new bill</h2>
+    <div class="w-25" [formGroup]="fetchCustomerForm">
+        <input type="text" class="form-control mb-2" placeholder="Mobile" formControlName="mobile">
+    </div>
+    <p *ngIf="customerDetails">{{customerDetails.mobile}} - {{customerDetails.plan}}</p>
+    <div *ngIf="allServices.length">
+        <div [formGroup]="generateInvoiceForm">
+            <div *ngFor="let aS of allServices">
+                <input type="checkbox" [checked]="false" (change)="handleCheckbox($event)" [value]="aS.title"
+                    class="form-check-input">
+                <label>{{aS.title}} - {{aS.price}}</label>
+            </div>
+        </div>
+        <p>Total: {{totalPrice}}</p>
+        <p>Discount: {{currentCustomerPlan.discount}}%</p>
+        <p>Final price: {{finalPrice}}</p>
+    </div>
+    <button *ngIf="!customerDetails" type="button" class="btn btn-success" (click)="getCustomerDetails()"
+        [disabled]="!fetchCustomerForm.valid">Get
+        customer details</button>
+    <button *ngIf="customerDetails" type="button" class="btn btn-primary" (click)="generateInvoice()">Generate
+        Invoice</button>
+</div>
+<div *ngIf="loading"
+    class="loader-container bg-white d-flex flex-column justify-content-center align-items-center bg-opacity-50">
+    <div class="page-loader">
+    </div>
+    <span class="mt-2 text-primary-emphasis">Loading...</span>
+</div>
