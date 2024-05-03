@@ -14,6 +14,6 @@ steps:
   args: ['app', 'deploy', 'plan-based-billing-frontend', '--quiet']  # Deploy to App Engine
 
 # Define substitutions (optional)
-substitutions:
-  'plan-based-billing-frontend': projectId  # Replace with project ID from environment variable
-  'plan-based-billing-frontend': APP_NAME  # Replace with desired App Engine app name (optional)
+#substitutions:
+#  'plan-based-billing-frontend': projectId  # Replace with project ID from environment variable
+#  'plan-based-billing-frontend': APP_NAME  # Replace with desired App Engine app name (optional)
