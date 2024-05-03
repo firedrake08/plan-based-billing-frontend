@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BusinessService {
-  dbUrl:any = 'https://plan-based-billing-backend.onrender.com';
+  dbUrl:any = 'https://plan-based-billing-backend-hdj3uqfd3a-uc.a.run.app';
   constructor(public http:HttpClient) { }
 
   updatePlans(bid:any,plans:any){
