@@ -1,0 +1,19 @@
+# Define the build steps
+steps:
+- name: 'gcr.io/cloud-builders/docker'  # Use Docker builder image
+  args: ['--BUILD_ARG=STATIC_DIR=dist']  # Pass argument to build step 
+- name: 'node:16'  # Use Node.js 16 environment
+  dir: '.'  # Set working directory to project root
+  entrypoint: 'npm'  # Use npm as entrypoint
+  args: ['ci']  # Run npm ci to install dependencies
+
+- name: 'gcr.io/cloud-builders/gcloud'  # Use gcloud builder image
+  args: ['--project', 'plan-based-billing-frontend']  # Replace with your project ID
+  dir: '.'  # Set working directory to project root
+  entrypoint: 'gcloud'  # Use gcloud as entrypoint
+  args: ['app', 'deploy', 'plan-based-billing-frontend', '--quiet']  # Deploy to App Engine
+
+# Define substitutions (optional)
+substitutions:
+  'plan-based-billing-frontend': projectId  # Replace with project ID from environment variable
+  'plan-based-billing-frontend': APP_NAME  # Replace with desired App Engine app name (optional)
