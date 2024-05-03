@@ -16,7 +16,7 @@ steps:
   args: ['--project', 'plan-based-billing-frontend']  # Replace with your project ID
   dir: '.'  # Set working directory to project root
   entrypoint: 'gcloud'  # Use gcloud as entrypoint
-  args: ['app', 'deploy', 'plan-based-billing-frontend', '--quiet']  # Deploy to App Engine
+  args: ['app', 'deploy', 'dist/plan-based-billing-frontend', '--quiet']  # Deploy to App Engine
 
 # Define substitutions (optional)
 #substitutions:
