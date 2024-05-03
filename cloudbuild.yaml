@@ -2,7 +2,7 @@
 steps:
 #- name: 'gcr.io/cloud-builders/docker'  # Use Docker builder image
 #  args: ['--BUILD_ARG=STATIC_DIR=dist']  # Pass argument to build step 
-- name: 'node:16'  # Use Node.js 16 environment
+- name: 'node:12'  # Use Node.js 16 environment
   dir: '.'  # Set working directory to project root
   entrypoint: 'npm'  # Use npm as entrypoint
   args: ['ci']  # Run npm ci to install dependencies
